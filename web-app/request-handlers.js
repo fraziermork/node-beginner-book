@@ -1,5 +1,6 @@
 // var exec = require('child_process').exec;
 var querystring = require('querystring');
+var fs = require('fs');
 
 function start(response){
   console.log('request-handler "start" was called.');
@@ -12,9 +13,9 @@ function start(response){
   '<meta charset="utf-8"/> ' +
   '</head> ' +
   '<body> ' +
-  '<form action="/upload" method="post"> ' +
-  '<textarea name="text" rows="20" cols="60"></textarea> ' +
-  '<input type="submit" value="submit text"/> ' +
+  '<form action="/upload" enctype="multipart/form-data" method="post"> ' +
+  '<input type="file" name="upload"></input> ' +
+  '<input type="submit" value="Upload file"/> ' +
   '</form> '+
   '</body> '+
   '</html>';
@@ -36,5 +37,12 @@ function upload(response, postData){
   response.end();
   // return 'hello upload';
 }
+
+function show(response){
+  console.log(('request-handler "show" was called'));
+  response.writeHead(200, {'Content-Type': 'image/png'});
+  fs.createReadStreem('/tmp/test.png').pipe(response);
+}
 module.exports.start = start;
 module.exports.upload = upload;
+module.exports.show = show;

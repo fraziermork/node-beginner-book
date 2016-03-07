@@ -43,12 +43,12 @@ function upload(response, request){
     fs.rename(files.upload.path, '/tmp/test.png', function(error){
       if (error){
         fs.unlink('/tmp/test.png');
-        fs.rename(files.uplaod.path, 'tmp/test.png');
+        fs.rename(files.upload.path, 'tmp/test.png');
       }
     });
-    response.writeHead(200, {'Content-Type': 'text/plain'});
+    response.writeHead(200, {'Content-Type': 'text/html'});
     response.write('received image: <br/>');
-    response.write('<img src="/show" />');
+    response.write('<img src="/show"/>');
     // response.write('You wrote: ' + querystring.parse(postData).text);
     response.end();
   });
@@ -61,6 +61,7 @@ function show(response){
   response.writeHead(200, {'Content-Type': 'image/png'});
   fs.createReadStream('/tmp/test.png').pipe(response);
 }
+
 module.exports.start = start;
 module.exports.upload = upload;
 module.exports.show = show;

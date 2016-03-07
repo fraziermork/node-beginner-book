@@ -1,4 +1,5 @@
-var exec = require('child_process').exec;
+// var exec = require('child_process').exec;
+var querystring = require('querystring');
 
 function start(response){
   console.log('request-handler "start" was called.');
@@ -28,10 +29,10 @@ function start(response){
   
   // return content;
 }
-function upload(response){
+function upload(response, postData){
   console.log('request-handler "upload" was called.');
   response.writeHead(200, {'Content-Type': 'text/plain'});
-  response.write('Hello upload');
+  response.write('You wrote: ' + querystring.parse(postData).text);
   response.end();
   // return 'hello upload';
 }
